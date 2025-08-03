@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Visitor Management System</title>
+  <link rel="stylesheet" href="styles1.css" />
+  <style>
+    .form-section {
+      display: flex;
+      gap: 30px;
+    }
+
+    .form-column {
+      flex: 1;
+    }
+
+    .camera-section {
+      flex: 0.8;
+      text-align: center;
+    }
+
+    video {
+      width: 100%;
+      max-width: 300px;
+      border: 1px solid #ccc;
+    }
+
+    canvas {
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group-center {
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <img src="avnl2.jpg" class="logo left-logo" />
+    <div class="title-section">
+      <h1>ORDNANCE FACTORY MEDAK</h1>
+      <h3>A unit of Armoured Vehicles Nigam Limited</h3>
+      <h4>Govt of India Enterprise, Ministry of Defence</h4>
+    </div>
+    <img src="Avnl1.jpg" class="logo right-logo" />
+  </header>
+
+  <!-- Gradient Bar -->
+  <div class="gradient-bar">Visitor's Management System</div>
+
+  <!-- Main Layout -->
+  <div class="main-content">
+    <div class="sidebar">
+      <h3>Links</h3>
+      <button onclick="window.open('login.html', '_blank')">Login</button>
+      <button onclick="window.open('finance.html', '_blank')">Finance Cell</button>
+      <button onclick="window.open('internal-web.html', '_blank')">Internal Web</button>
+      <button onclick="window.open('qms.html', '_blank')">QMS Portal</button>
+      <button onclick="window.open('helpdesk.html', '_blank')">ITC Help Desk</button>
+      <button onclick="window.open('users.html', '_blank')">List of Users</button>
+      <button onclick="window.open('ofb.html', '_blank')">OFB Comnet</button>
+      <button onclick="window.open('ofmk.html', '_blank')">OFMK Comnet</button>
+      <button onclick="window.open('details.html', '_blank')">Visitor Details</button>
+      <button onclick="window.open('view_all.php', '_blank')">All Visitors</button>
+    </div>
+
+    <!-- Form and Camera Side-by-Side -->
+    <div class="form-section">
+      <!-- Left: Form -->
+      <div class="form-column">
+        <form id="visitorForm" method="POST" action="details.php">
+          <div class="form-group">
+            <label>Letter No:</label><input type="text" name="letterNo" placeholder="Letter No." required />
+          </div>
+          <div class="form-group">
+            <label>Name of the Firm:</label><input type="text" name="firm" placeholder="Name of the Firm" required />
+          </div>
+          <div class="form-group">
+            <label>Visitor's Name:</label><input type="text" name="visitorName" placeholder="Visitor's Name" required />
+          </div>
+          <div class="form-group">
+            <label>Visitor's Designation:</label><input type="text" name="designation" placeholder="Visitor's Designation" required />
+          </div>
+          <div class="form-group">
+            <label>Officer to Visit:</label><input type="text" name="officer" placeholder="Officer to Visit" required />
+          </div>
+          <div class="form-group">
+            <label>Officer's Designation:</label><input type="text" name="officerDesig" placeholder="Officer's Designation" required />
+          </div>
+          <div class="form-group">
+            <label>Officer Section:</label><input type="text" name="section" placeholder="Officer Section" required />
+          </div>
+          <div class="form-group">
+            <label>Purpose of Visit:</label><input type="text" name="purpose" placeholder="Purpose of Visit" required />
+          </div>
+          <div class="form-group">
+            <label>Permission From - To:</label><br>
+            <label>From Date:</label><input type="date" name="fromDate" required /><br>
+            <label>To Date:</label><input type="date" name="toDate" required />
+          </div>
+
+          <!-- Hidden field for photo -->
+          <input type="hidden" name="photo" id="photoData" />
+
+          <div class="form-group-center">
+            <button type="submit">Save and Print</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Right: Camera -->
+      <div class="camera-section">
+        <h4>Photograph</h4>
+        <video id="video" autoplay></video>
+        <canvas id="canvas" style="display:none;"></canvas><br>
+        <button type="button" onclick="capturePhoto()">Capture Photo</button>
+        <button id="retakeBtn" style="display:none;" onclick="retakePhoto()">Retake Photo</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">Developed & Maintained by ITC/Ordnance Factory Medak</footer>
+
+  <script>
+    // Camera Setup
+    const video = document.getElementById("video");
+    const canvas = document.getElementById("canvas");
+    const photoData = document.getElementById("photoData");
+
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then((stream) => {
+        video.srcObject = stream;
+      });
+
+    function capturePhoto() {
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      canvas.getContext("2d").drawImage(video, 0, 0);
+      const dataURL = canvas.toDataURL("image/png");
+      photoData.value = dataURL;
+      canvas.style.display = "block";
+      video.style.display = "none";
+      document.getElementById("retakeBtn").style.display = "inline";
+    }
+
+    function retakePhoto() {
+      canvas.style.display = "none";
+      video.style.display = "block";
+      document.getElementById("retakeBtn").style.display = "none";
+    }
+  </script>
+</body>
+</html>
