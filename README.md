@@ -9,4 +9,4 @@ Avnl1.jpg - Sample image 1 avnl2.jpg - Sample image 2 create_table.sql - SQL
 📌 Features
 • Add visitor details through a web form • Store records in MySQL database • View all visitors • View detailed information about each visitor • Simple and user-friendly interface
 💡 Author
-Developed by Raghavendra1032 GitHub: https://github.com/Raghavendra1032
+Developed by Raghavendra1032 
